@@ -40,8 +40,13 @@ void draw() {
   xo1 = xo + r + 15;
   line (xo1, 0, xo1, height); //y-axis for waves
   stroke(0);
-  float theta = atan((yo - mouseY)/(mouseX - xo)); //angle theta from x-axis to mouse position
-
+  float theta;
+  if ( mouseX < xo1) {
+    theta = atan((yo - mouseY)/(mouseX - xo)); //angle theta from x-axis to mouse position
+  } else {
+    theta = map(mouseX, xo1, 780, 0, PI*2);
+  }
+  println(theta);
   //draw labels
   drawLabels();
 
@@ -188,7 +193,47 @@ void rotateLine(float theta) {
   }
 
   //right circle
-  else {
+  else if (mouseX < xo1 && mouseX > xo) {
+    fill(0);
+    line(xo, yo, xo + r*cos(theta), yo - r*sin(theta));
+
+    //Cosine
+    stroke(255, 0, 0, 240);
+    fill(255, 0, 0, 240);
+    line(xo + r*cos(theta), yo, xo + r*cos(theta), yo - r*sin(theta));
+    ellipse(xo + r*cos(theta), yo, 5, 5);
+
+
+
+    //Sine
+    stroke(255, 3, 226, 240);
+    fill(255, 3, 226, 240);
+    line(xo, yo - r*sin(theta), xo + r*cos(theta), yo - r*sin(theta));
+    ellipse(xo, yo - r*sin(theta), 5, 5);
+
+    //CoTangent
+    stroke(3, 255, 59, 240);
+    fill(3, 255, 59, 240);
+    line(xo + r*cos(theta), yo - r*sin(theta), xo, yo - r*1/sin(theta));
+    ellipse(xo, yo - r*1/sin(theta), 5, 5);
+
+    //Tangent
+    stroke(3, 46, 255, 240);
+    fill(3, 46, 255, 240);
+    line(xo + r*cos(theta), yo - r*sin(theta), xo + r*1/cos(theta), yo);
+    ellipse(xo + r*1/cos(theta), yo, 5, 5);
+    
+        //Cosecant
+    stroke(3, 255, 255, 240);
+    fill(3, 255, 255, 240);
+    line(xo, yo, xo, yo - r*1/sin(theta));
+    ellipse(xo, yo, 5, 5);
+
+    stroke(0);
+    fill(0);
+    ellipse(xo + r*cos(theta), yo - r*sin(theta), 5, 5); //black dot on circle
+    noFill();
+  } else if (mouseX > xo1) {
     fill(0);
     line(xo, yo, xo + r*cos(theta), yo - r*sin(theta));
 
