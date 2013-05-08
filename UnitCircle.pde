@@ -41,7 +41,7 @@ void draw() {
   line (xo1, 0, xo1, height); //y-axis for waves
   stroke(0);
   float theta;
-  if ( mouseX < xo1) {
+  if (mouseX < xo1) {
     theta = atan((yo - mouseY)/(mouseX - xo)); //angle theta from x-axis to mouse position
   } else {
     theta = map(mouseX, xo1, 780, 0, PI*2);
@@ -103,6 +103,7 @@ void draw() {
   drawCos();
   drawTan();
   drawCosec();
+  drawCotan();
   drawSecant();
 
   noStroke();
@@ -184,6 +185,12 @@ void rotateLine(float theta) {
     fill(3, 255, 255, 240);
     line(xo, yo, xo, yo + r*1/sin(theta));
     ellipse(xo, yo, 5, 5);
+    
+    //Secant
+    stroke(102, 0, 153, 240);
+    fill(102, 0, 153, 240);
+    line(xo, yo, xo - r*1/cos(theta), yo);
+    ellipse(xo, yo, 5, 5);
 
     stroke(0);
     fill(0);
@@ -192,7 +199,7 @@ void rotateLine(float theta) {
   }
 
   //right circle
-  else if (mouseX < xo1 && mouseX > xo) {
+  else {
     fill(0);
     line(xo, yo, xo + r*cos(theta), yo - r*sin(theta));
 
@@ -201,8 +208,6 @@ void rotateLine(float theta) {
     fill(255, 0, 0, 240);
     line(xo + r*cos(theta), yo, xo + r*cos(theta), yo - r*sin(theta));
     ellipse(xo + r*cos(theta), yo, 5, 5);
-
-
 
     //Sine
     stroke(255, 3, 226, 240);
@@ -221,51 +226,17 @@ void rotateLine(float theta) {
     fill(3, 46, 255, 240);
     line(xo + r*cos(theta), yo - r*sin(theta), xo + r*1/cos(theta), yo);
     ellipse(xo + r*1/cos(theta), yo, 5, 5);
-    
-        //Cosecant
+
+    //cosecant
     stroke(3, 255, 255, 240);
     fill(3, 255, 255, 240);
     line(xo, yo, xo, yo - r*1/sin(theta));
     ellipse(xo, yo, 5, 5);
-
-    stroke(0);
-    fill(0);
-    ellipse(xo + r*cos(theta), yo - r*sin(theta), 5, 5); //black dot on circle
-    noFill();
-  } else if (mouseX > xo1) {
-    fill(0);
-    line(xo, yo, xo + r*cos(theta), yo - r*sin(theta));
-
-    //Cosine
-    stroke(255, 0, 0, 240);
-    fill(255, 0, 0, 240);
-    line(xo + r*cos(theta), yo, xo + r*cos(theta), yo - r*sin(theta));
-    ellipse(xo + r*cos(theta), yo, 5, 5);
-
-
-
-    //Sine
-    stroke(255, 3, 226, 240);
-    fill(255, 3, 226, 240);
-    line(xo, yo - r*sin(theta), xo + r*cos(theta), yo - r*sin(theta));
-    ellipse(xo, yo - r*sin(theta), 5, 5);
-
-    //CoTangent
-    stroke(3, 255, 59, 240);
-    fill(3, 255, 59, 240);
-    line(xo + r*cos(theta), yo - r*sin(theta), xo, yo - r*1/sin(theta));
-    ellipse(xo, yo - r*1/sin(theta), 5, 5);
-
-    //Tangent
-    stroke(3, 46, 255, 240);
-    fill(3, 46, 255, 240);
-    line(xo + r*cos(theta), yo - r*sin(theta), xo + r*1/cos(theta), yo);
-    ellipse(xo + r*1/cos(theta), yo, 5, 5);
     
-        //Cosecant
-    stroke(3, 255, 255, 240);
-    fill(3, 255, 255, 240);
-    line(xo, yo, xo, yo - r*1/sin(theta));
+    //Secant
+    stroke(102, 0, 153, 240);
+    fill(102, 0, 153, 240);
+    line(xo, yo, xo + r*1/cos(theta), yo);
     ellipse(xo, yo, 5, 5);
 
     stroke(0);
@@ -517,7 +488,6 @@ void trackDots(float theta) {
   if (mouseX < xo && mouseX < xo1) {
     if (mouseY < yo) {
       ellipse(2*r+ xo1+mappedX, yo+r*tan(-theta), 5, 5);//TANGENT dot
-      
     }
     else if (mouseY > yo) { 
       ellipse(2*r+xo1+mappedX, yo+r*tan(-theta), 5, 5);//TANGENT dot
@@ -528,7 +498,7 @@ void trackDots(float theta) {
   if (mouseX > xo1) {
     ellipse(mouseX, yo - tan((mouseX-xo1)/80) * r, 5, 5);
   }
-  
+
   //COSECANT
   //when the mouse is around the circle
   stroke(3, 255, 255, 240);
@@ -554,31 +524,57 @@ void trackDots(float theta) {
   if (mouseX > xo1) {
     ellipse(mouseX, yo - 1/sin((mouseX-xo1)/80) * r, 5, 5);//COSECANT dot
   }
-  
-  //SECANT
+
+  //COTAN
   //when the mouse is around the circle
-    stroke(3, 255, 59, 240);
-    fill(3, 255, 59, 240);
+  stroke(3, 255, 59, 240);
+  fill(3, 255, 59, 240);
   if (mouseX > xo && mouseX < xo1) {
     if (mouseY < yo) {
-      ellipse(xo1+mappedX, yo-r*1/cos(theta), 5, 5); //COSECANT dot
+      ellipse(xo1+mappedX, yo-r*1/tan(theta), 5, 5); //COTANGENT dot
     }
     else if (mouseY > yo) {
-      ellipse(4*r-2+ xo1+mappedX, yo-r*1/cos(theta), 5, 5); //COSECANT dot
+      ellipse(4*r-2+ xo1+mappedX, yo-r*1/tan(theta), 5, 5); //COTANGENT dot
     }
   } 
   if (mouseX < xo && mouseX < xo1) {
     if (mouseY < yo) {
-      ellipse(2*r+xo1+mappedX, yo+r*1/cos(theta), 5, 5);//COSECANT dot
+      ellipse(2*r+xo1+mappedX, yo-r*1/tan(theta), 5, 5);//COTANGENT dot
     }
     else if (mouseY > yo) { 
-      ellipse(2*r+ xo1+mappedX, yo+r*1/cos(theta), 5, 5);//COSECANT dot
+      ellipse(2*r+ xo1+mappedX, yo-r*1/tan(theta), 5, 5);//COTANGENT dot
     }
   }
 
   //when the mouse is on the wave graph
   if (mouseX > xo1) {
-    ellipse(mouseX, yo - 1/cos((mouseX-xo1)/80) * r, 5, 5);//COSECANT dot
+    ellipse(mouseX, yo - 1/tan((mouseX-xo1)/80) * r, 5, 5);//COTANGENT dot
+  }
+  
+  //COSECANT
+  //when the mouse is around the circle
+  stroke(102, 0, 153, 240);
+  fill(102, 0, 153, 240);
+  if (mouseX > xo && mouseX < xo1) {
+    if (mouseY < yo) {
+      ellipse(xo1+mappedX, yo-r*1/cos(theta), 5, 5); //SECANT dot
+    }
+    else if (mouseY > yo) {
+      ellipse(4*r-2+ xo1+mappedX, yo-r*1/cos(theta), 5, 5); //SECANT dot
+    }
+  } 
+  if (mouseX < xo && mouseX < xo1) {
+    if (mouseY < yo) {
+      ellipse(2*r+xo1+mappedX, yo+r*1/cos(theta), 5, 5);//SECANT dot
+    }
+    else if (mouseY > yo) { 
+      ellipse(2*r+ xo1+mappedX, yo+r*1/cos(theta), 5, 5);//SECANT dot
+    }
+  }
+
+  //when the mouse is on the wave graph
+  if (mouseX > xo1) {
+    ellipse(mouseX, yo - 1/cos((mouseX-xo1)/80) * r, 5, 5);//SECANT dot
   }
 }
 
@@ -650,12 +646,31 @@ void drawCosec() {
 }
 
 
+void drawCotan() {
+  float a = 0;
+  float inc = TWO_PI/25.0;
+  float prev_x = xo1, prev_y = yo-r, x = xo1, y = yo;
+  stroke(3, 255, 59, 240);
+  fill(3, 255, 59, 240);
+  for (int i=round(xo1); i<width; i=i+4) {
+    x = i;
+    y = yo - 1/tan(a/5) * r;
+    if (y > - 10 && y < height+10) {
+      line(prev_x, prev_y, x, y);
+    }
+    prev_x = x;
+    prev_y = y;
+    a = a + inc;
+  }
+}
+
+
 void drawSecant() {
   float a = 0;
   float inc = TWO_PI/25.0;
   float prev_x = xo1, prev_y = yo-r, x = xo1, y = yo;
-    stroke(3, 255, 59, 240);
-    fill(3, 255, 59, 240);
+  stroke(102, 0, 153, 240);
+  fill(102, 0, 153, 240);
   for (int i=round(xo1); i<width; i=i+4) {
     x = i;
     y = yo - 1/cos(a/5) * r;
@@ -667,4 +682,3 @@ void drawSecant() {
     a = a + inc;
   }
 }
-
